@@ -66,15 +66,20 @@
       }
 
       .category {
-        min-width: 272px;
+        width: 272px;
         margin: 10px;
       }
 
       .row-categories {
         overflow-x: auto;
         display: flex;
-        justify-content: space-around;
         width: 100%;
+      }
+
+      .task-text-div{
+            border: 1px solid silver;
+            border-radius: 10px;
+            padding: 10px;
       }
 
       /* Responsividade: em telas menores, o sidebar pode se esconder (ou ser colapsado) */
@@ -162,132 +167,15 @@
             <div class="category">
                 <div class="card mb-3">
                     <div class="card-body">
-                    <h5 class="card-title">Card 1</h5>
-                    <p class="card-text">Algum texto de exemplo.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="category">
-                <div class="card mb-3">
-                    <div class="card-body">
-                        <h5 class="card-title">Card 2</h5>
-                        <p class="card-text">Algum texto de exemplo.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="category">
-                <div class="card mb-3">
-                    <div class="card-body">
-                        <h5 class="card-title">Card 3</h5>
-                        <p class="card-text">Algum texto de exemplo.</p>
-                    </div>
-                </div>
-            </div>
+                        <h5 class="card-title">Card 1</h5>
 
-            <div class="category">
-                <div class="card mb-3">
-                    <div class="card-body">
-                        <h5 class="card-title">Card 3</h5>
-                        <p class="card-text">Algum texto de exemplo.</p>
-                    </div>
-                </div>
-            </div>
+                        <div class="task-text-div mb-3">
+                            <span class="task-text">asdfsdfgsdfhdhjdfjggfdsgsagsdtydhdfjfdndfjdtjfdhf</span>
+                        </div>
 
-            <div class="category">
-                <div class="card mb-3">
-                    <div class="card-body">
-                        <h5 class="card-title">Card 3</h5>
-                        <p class="card-text">Algum texto de exemplo.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="category">
-                <div class="card mb-3">
-                    <div class="card-body">
-                        <h5 class="card-title">Card 3</h5>
-                        <p class="card-text">Algum texto de exemplo.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="category">
-                <div class="card mb-3">
-                    <div class="card-body">
-                        <h5 class="card-title">Card 3</h5>
-                        <p class="card-text">Algum texto de exemplo.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="category">
-                <div class="card mb-3">
-                    <div class="card-body">
-                        <h5 class="card-title">Card 3</h5>
-                        <p class="card-text">Algum texto de exemplo.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="category">
-                <div class="card mb-3">
-                    <div class="card-body">
-                        <h5 class="card-title">Card 3</h5>
-                        <p class="card-text">Algum texto de exemplo.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="category">
-                <div class="card mb-3">
-                    <div class="card-body">
-                        <h5 class="card-title">Card 3</h5>
-                        <p class="card-text">Algum texto de exemplo.</p>
-                    </div>
-                </div>
-            </div>
-
-             <div class="category">
-                <div class="card mb-3">
-                    <div class="card-body">
-                        <h5 class="card-title">Card 3</h5>
-                        <p class="card-text">Algum texto de exemplo.</p>
-                    </div>
-                </div>
-            </div>
-
-             <div class="category">
-                <div class="card mb-3">
-                    <div class="card-body">
-                        <h5 class="card-title">Card 3</h5>
-                        <p class="card-text">Algum texto de exemplo.</p>
-                    </div>
-                </div>
-            </div>
-
-             <div class="category">
-                <div class="card mb-3">
-                    <div class="card-body">
-                        <h5 class="card-title">Card 3</h5>
-                        <p class="card-text">Algum texto de exemplo.</p>
-                    </div>
-                </div>
-            </div>
-
-             <div class="category">
-                <div class="card mb-3">
-                    <div class="card-body">
-                        <h5 class="card-title">Card 3</h5>
-                        <p class="card-text">Algum texto de exemplo.</p>
-                    </div>
-                </div>
-            </div>
-
-             <div class="category">
-                <div class="card mb-3">
-                    <div class="card-body">
-                        <h5 class="card-title">Card 3</h5>
-                        <p class="card-text">Algum texto de exemplo.</p>
+                        <div class="task-text-div mb-3">
+                            <span class="task-text">asdfsdfgsdfhdhjdfjggfdsgsagsdtydhdfjfdndfjdtjfdhf</span>
+                        </div>
                     </div>
                 </div>
             </div>
