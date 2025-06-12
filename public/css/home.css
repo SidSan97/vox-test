@@ -1,0 +1,80 @@
+/* Corpo */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #0d1b2a;
+  }
+
+  /* Navbar */
+  .navbar-custom {
+    background-color: #343a40;
+  }
+  .navbar-custom .navbar-brand,
+  .navbar-custom .nav-link {
+    color: #ffffff !important;
+  }
+
+  /* Conteúdo principal */
+  .main-content {
+    margin-left: 250px; /* largura da sidebar */
+    padding: 20px;
+    background-color: #0d1b2a;
+    min-height: calc(100vh - 56px);
+    color: #fff;
+  }
+
+  .kanban-column {
+    background-color: #111;
+    border-radius: 12px;
+    padding: 15px;
+    width: 300px;
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .kanban-header {
+  font-weight: bold;
+  font-size: 1.1rem;
+  margin-bottom: 15px;
+}
+
+.card-task {
+  background-color: #1e2a38;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  cursor: grab;
+  transition: background-color 0.2s;
+}
+
+.card-task:hover {
+  background-color: #263646;
+}
+
+.sortable-coluna {
+min-height: 100px; /* <= permite soltar cards em colunas vazias */
+}
+
+
+.add-card {
+  color: #ccc;
+  cursor: pointer;
+  margin-top: auto;
+}
+
+.add-card:hover {
+  color: #fff;
+}
+
+.kanban-board {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+  @media (max-width: 992px) {
+    .main-content {
+      margin-left: 0;
+    }
+  }
