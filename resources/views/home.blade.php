@@ -1,121 +1,22 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Template Dashboard</title>
-    <!-- Bootstrap 5 CSS -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <!-- Bootstrap Icons (opcional) -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.min.css"
-      rel="stylesheet"
-    />
-    <style>
-      /* Corpo */
-      body {
-        font-family: Arial, sans-serif;
-        background-color: #f8f9fa;
-        margin: 0;
-        padding: 0;
-      }
-
-      /* Navbar */
-      .navbar-custom {
-        background-color: #343a40;
-      }
-      .navbar-custom .navbar-brand,
-      .navbar-custom .nav-link {
-        color: #ffffff !important;
-      }
-
-      /* Sidebar */
-      .sidebar {
-        height: 100vh;
-        position: absolute;
-        top: 56px; /* Altura da navbar (padrão Bootstrap 5 é 56px) */
-        left: 0;
-        bottom: 0;
-        width: 250px;
-        background-color: #212529;
-        padding-top: 20px;
-        overflow-y: auto;
-      }
-      .sidebar a {
-        display: block;
-        padding: 10px 20px;
-        color: #adb5bd;
-        text-decoration: none;
-        font-size: 0.95rem;
-      }
-      .sidebar a:hover {
-        background-color: #343a40;
-        color: #ffffff;
-      }
-
-      /* Conteúdo principal */
-      .main-content {
-        margin-top: 56px; /* altura da navbar */
-        margin-left: 250px; /* largura da sidebar */
-        padding: 20px;
-        background-color: #ffffff;
-        min-height: calc(100vh - 56px);
-      }
-
-      .category {
-        width: 272px;
-        margin: 10px;
-      }
-
-      .row-categories {
-        overflow-x: auto;
-        display: flex;
-        width: 100%;
-      }
-
-      .task-text-div{
-            border: 1px solid silver;
-            border-radius: 10px;
-            padding: 10px;
-      }
-
-      /* Responsividade: em telas menores, o sidebar pode se esconder (ou ser colapsado) */
-      @media (max-width: 992px) {
-        .sidebar {
-          left: -250px;
-          transition: left 0.3s ease;
-        }
-        .sidebar.show {
-          left: 0;
-        }
-        .main-content {
-          margin-left: 0;
-        }
-      }
-
-      /* Botão de menu para abrir o sidebar em telas pequenas */
-      .sidebar-toggle-btn {
-        display: none;
-      }
-      @media (max-width: 992px) {
-        .sidebar-toggle-btn {
-          display: block;
-          position: fixed;
-          top: 8px;
-          left: 8px;
-          z-index: 1100;
-          border: none;
-          background: #343a40;
-          color: #fff;
-          padding: 8px 12px;
-          border-radius: 4px;
-        }
-      }
-    </style>
-  </head>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Template Dashboard</title>
+        <!-- Bootstrap 5 CSS -->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+        />
+        <!-- Bootstrap Icons (opcional) -->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.min.css"
+          rel="stylesheet"
+        />
+        <link rel="stylesheet" href="{{asset('css/home.css')}}">
+        <link rel="stylesheet" href="{{asset('css/sidebar.css')}}">
+    </head>
   <body>
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
@@ -162,24 +63,64 @@
             componentes.
         </p>
 
-        <!-- Exemplo de cards no conteúdo -->
-        <div class="row-categories">
-            <div class="category">
-                <div class="card mb-3">
-                    <div class="card-body">
-                        <h5 class="card-title">Card 1</h5>
-
-                        <div class="task-text-div mb-3">
-                            <span class="task-text">asdfsdfgsdfhdhjdfjggfdsgsagsdtydhdfjfdndfjdtjfdhf</span>
-                        </div>
-
-                        <div class="task-text-div mb-3">
-                            <span class="task-text">asdfsdfgsdfhdhjdfjggfdsgsagsdtydhdfjfdndfjdtjfdhf</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="kanban-board">
+    
+    <!-- Coluna 1 -->
+    <div class="kanban-column">
+      <div class="kanban-header">Tarefas</div>
+      <div class="sortable-coluna">
+        <div class="card-task d-flex justify-content-between align-items-center">
+          <div>
+            <div>Especificar requisitos</div>
+            <div class="text-muted small"><i class="bi bi-eye"></i> <i class="bi bi-list-task"></i></div>
+          </div>
         </div>
+        <div class="card-task d-flex justify-content-between align-items-center">
+          <div>
+            <div>Validar escopo</div>
+            <div class="text-muted small"><i class="bi bi-eye"></i> <i class="bi bi-list-task"></i></div>
+          </div>
+        </div>
+      </div>
+      <div class="add-card"><i class="bi bi-plus-lg"></i> Adicionar um cartão</div>
+    </div>
+
+    <!-- Coluna 2 -->
+    <div class="kanban-column">
+      <div class="kanban-header">Em andamento</div>
+      <div class="sortable-coluna">
+        <div class="card-task d-flex justify-content-between align-items-center">
+          <div>
+            <div>Autopreencher fortalezas</div>
+            <div class="text-muted small"><i class="bi bi-eye"></i> <i class="bi bi-list-task"></i></div>
+          </div>
+        </div>
+      </div>
+      <div class="add-card"><i class="bi bi-plus-lg"></i> Adicionar um cartão</div>
+    </div>
+
+    <!-- Coluna 3 -->
+    <div class="kanban-column">
+      <div class="kanban-header">Concluído</div>
+      <div class="sortable-coluna">
+        <div class="card-task d-flex justify-content-between align-items-center">
+          <div>
+            <div>Autopreencher monitoramento</div>
+            <div class="text-muted small"><i class="bi bi-eye"></i> <i class="bi bi-list-task"></i></div>
+          </div>
+        </div>
+        <div class="card-task d-flex justify-content-between align-items-center">
+          <div>
+            <div>Flag atividades em aberto</div>
+            <div class="text-muted small"><i class="bi bi-eye"></i> <i class="bi bi-list-task"></i></div>
+          </div>
+        </div>
+      </div>
+      <div class="add-card"><i class="bi bi-plus-lg"></i> Adicionar um cartão</div>
+    </div>
+
+  </div>
+        
     </div>
 
     <!-- Bootstrap JS -->
@@ -192,5 +133,16 @@
         sidebar.classList.toggle("show");
       });
     </script>
+    <!-- SortableJS -->
+  <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+  <script>
+    document.querySelectorAll('.sortable-coluna').forEach(function (el) {
+      new Sortable(el, {
+        group: 'kanban',
+        animation: 150,
+        ghostClass: 'bg-secondary'
+      });
+    });
+  </script>
   </body>
 </html>
