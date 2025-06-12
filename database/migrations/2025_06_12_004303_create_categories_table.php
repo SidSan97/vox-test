@@ -18,7 +18,7 @@ return new class extends Migration
             $table->integer('position')->comment("posição na ordenação");
             $table->timestamps();
 
-            $table->foreign('board_id', 'board_id_fk')->references('id')->on('board')->onDelete('cascade');
+            $table->foreign('board_id', 'board_id_fk')->references('id')->on('boards')->onDelete('cascade');
         });
     }
 

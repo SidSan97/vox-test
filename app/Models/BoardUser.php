@@ -3,24 +3,18 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class Category extends Model
+class BoardUser extends Pivot
 {
-    use HasFactory, Notifiable;
+    use HasFactory;
 
-    protected $table = "categories";
+    protected $table = 'board_user';
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
     protected $fillable = [
-        'title',
         'board_id',
-        'position',
+        'user_id',
+        'role',
     ];
 
     /**
@@ -32,7 +26,15 @@ class Category extends Model
     {
         return [
             'board_id' => 'integer',
-            'position' => 'integer',
+            'user_id' => 'integer',
         ];
     }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class)
+            ->withPivot('role')
+            ->using(BoardUser::class);
+    }
+
 }

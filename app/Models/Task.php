@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 
-class Category extends Model
+class Task extends Model
 {
     use HasFactory, Notifiable;
 
-    protected $table = "categories";
+    protected $table = "tasks";
 
     /**
      * The attributes that are mass assignable.
@@ -18,8 +18,10 @@ class Category extends Model
      * @var list<string>
      */
     protected $fillable = [
+        'category_id',
+        'user_id',
         'title',
-        'board_id',
+        'description',
         'position',
     ];
 
@@ -31,7 +33,8 @@ class Category extends Model
     protected function casts(): array
     {
         return [
-            'board_id' => 'integer',
+            'category_id' => 'integer',
+            'user_id' => 'integer',
             'position' => 'integer',
         ];
     }

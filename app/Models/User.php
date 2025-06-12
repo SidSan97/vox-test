@@ -21,7 +21,6 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'type',
     ];
 
     /**
@@ -44,7 +43,14 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
-            'type' => 'integer',
         ];
     }
+
+    public function boards()
+    {
+        return $this->belongsToMany(Board::class)
+            ->withPivot('role')
+            ->using(BoardUser::class);
+    }
+
 }

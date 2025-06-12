@@ -16,19 +16,6 @@
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
-        <!-- Role Selection -->
-        <div class="mt-4">
-            <x-input-label for="type" :value="__('Tipo de usuário')" />
-
-            <select id="type" name="type" class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
-                <option value="0">Selecione um papel</option>
-                <option value="1" >Proprietário</option>
-                <option value="2">Convidado</option>
-            </select>
-
-            <x-input-error :messages="$errors->get('type')" class="mt-2" />
-        </div>
-
         <!-- Password -->
         <div class="mt-4">
             <x-input-label for="password" :value="__('Senha')" />
