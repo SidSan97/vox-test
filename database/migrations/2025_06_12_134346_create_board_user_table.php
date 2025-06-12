@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('board_user', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('boards_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('board_id')->constrained()->cascadeOnDelete();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->enum('role', ['admin', 'collaborator'])->default('collaborator');
             $table->timestamps();
 
-            $table->unique(['boards_id', 'user_id']);
+            $table->unique(['board_id', 'user_id']);
         });
     }
 

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BoardController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -9,8 +10,11 @@ Route::get('/', function () {
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::view('/dashboard', 'dashboard')->name('dashboard');
-    Route::view('/home', 'home')->name('home');
+    Route::view('/board/{id}', 'board')->name('board.view');
     Route::view('/desktop', 'desktop')->name('desktop');
+
+    Route::post('/boards', [BoardController::class, 'store'])->name('create.board');
+    Route::get('/boards', [BoardController::class, 'index'])->name('index.board');
 });
 
 Route::middleware('auth')->group(function () {

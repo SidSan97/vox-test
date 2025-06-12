@@ -10,6 +10,8 @@ class Board extends Model
 {
     use HasFactory, Notifiable;
 
+    protected $table = "boards";
+
     /**
      * The attributes that are mass assignable.
      *
@@ -18,4 +20,12 @@ class Board extends Model
     protected $fillable = [
         'name',
     ];
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class)
+            ->withPivot('role')
+            ->using(BoardUser::class);
+    }
+
 }

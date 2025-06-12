@@ -50,6 +50,7 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Board::class)
             ->withPivot('role')
+            ->withTimestamps()
             ->using(BoardUser::class);
     }
 
