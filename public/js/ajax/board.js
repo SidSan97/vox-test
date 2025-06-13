@@ -21,7 +21,11 @@ function loadCategories() {
                 response.data.forEach(function (category) {
                     const tasksHtml = category.tasks.map(task => {
                         return `
-                            <div class="card-task d-flex justify-content-between align-items-center" data-task-id="${task.id}">
+                            <div class="card-task d-flex justify-content-between align-items-center"
+                                data-task-title="${task.title}"
+                                 data-task-id="${task.id}"
+                                data-task-description="${task.description ?? 'Sem descrição'}"
+                            >
                                 <div>
                                     <div class="taskTitle">${task.title}</div>
                                 </div>
@@ -42,6 +46,8 @@ function loadCategories() {
                     `;
 
                     document.querySelector("#kanban-board").insertAdjacentHTML('beforeend', template);
+
+                    activateModal();
                 });
 
                 const listContainerHtml = `

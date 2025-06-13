@@ -19,7 +19,7 @@
 
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     </head>
-  <body>
+  <body id="bodyBoard">
     @include('navbar')
 
     <button class="sidebar-toggle-btn" id="sidebarToggle">
@@ -32,6 +32,26 @@
         <h2>Bem-vindo ao quadro Dashboard</h2> <br>
 
         <div class="kanban-board" id="kanban-board"></div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="taskModal" tabindex="-1" aria-labelledby="taskModalLabel">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="taskModalLabel">Modal title</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="closeModal()"></button>
+                </div>
+
+                <div class="modal-body" id="taskModalBody">
+                    ...
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">Salvar mudanças</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

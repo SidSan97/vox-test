@@ -33,3 +33,7 @@
     font-size: 1.4rem;
     line-height: 1;
 }
+
+.modal-backdrop.show {
+    opacity: 0.1 !important;
+}

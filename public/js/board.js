@@ -70,3 +70,32 @@ function initSortable() {
     });
 }
 
+//modal Bootstrap
+function activateModal()
+{
+    $(document).on('click', '.card-task', function () {
+        const title = $(this).data('task-title');
+        const description = $(this).data('task-description');
+
+        $('#taskModalLabel').text(title);
+        $('#taskModalBody').text(description);
+
+        const modal = new bootstrap.Modal(document.getElementById('taskModal'));
+        modal.show();
+    });
+}
+
+function closeModal()
+{
+    setTimeout(() => {
+        $('.modal-backdrop').remove();
+    }, 300);
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    const modalEl = document.getElementById('taskModal');
+
+    modalEl.addEventListener('hidden.bs.modal', function () {
+        document.getElementById("bodyBoard").removeAttribute("style");
+    });
+});
