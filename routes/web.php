@@ -3,6 +3,7 @@
 use App\Http\Controllers\BoardController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TaskController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -19,6 +20,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/categories/{id}', [CategoryController::class, 'show'])->name('show.category');
     Route::post('/categories', [CategoryController::class, 'store'])->name('store.category');
+
+    Route::post('/task', [TaskController::class, 'store'])->name('store.task');
 });
 
 Route::middleware('auth')->group(function () {

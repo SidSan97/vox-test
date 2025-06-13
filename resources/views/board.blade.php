@@ -31,22 +31,6 @@
     <div class="main-content">
         <h2>Bem-vindo ao quadro Dashboard</h2> <br>
 
-        <!--div id="list-container" class="d-inline-block mb-4">
-            <button id="show-form-btn" class="btn add-list-btn">
-                + Adicionar outra lista
-            </button>
-
-            <div id="list-form" class="add-list-form d-none mt-2">
-                <input type="text" class="form-control mb-2" id="title" name="title" placeholder="Digite o nome da lista..." />
-                <div class="d-flex justify-content-between">
-                    <button class="btn btn-primary btn-sm" id="createCategory">Adicionar Lista</button>
-                    <button id="cancel-btn" class="btn-close">
-                        <i class="bi bi-x-lg text-dark"></i>
-                    </button>
-                </div>
-            </div>
-        </div-->
-
         <div class="kanban-board" id="kanban-board"></div>
     </div>
 

@@ -17,20 +17,21 @@ function loadCategories() {
             success: function (response) {
                 let container = $('#kanban-board');
                 container.empty();
+                console.log(response)
 
                 response.data.forEach(function (category) {
                     const tasksHtml = category.tasks.map(task => {
                         return `
                             <div class="card-task d-flex justify-content-between align-items-center">
                                 <div>
-                                    <div class="taskDescription">${task.description}</div>
+                                    <div class="taskDescription">${task.title}</div>
                                 </div>
                             </div>
                         `;
                     }).join('');
 
                     const template = `
-                        <div class="kanban-column">
+                        <div class="kanban-column" data-category-id="${category.id}">
                             <div class="kanban-header">${category.title}</div>
 
                             <div class="sortable-coluna">
@@ -123,6 +124,33 @@ function createCategory() {
     });
 }
 
+function createTask(categoryId) {
+    const taskTitle = $('#taskTitle').val();
+
+    $('#spinnerTask').show();
+    $.ajax({
+        url: '/task',
+        method: 'POST',
+        data: {
+            title: taskTitle,
+            category_id: categoryId,
+            position: 6,
+            _token: $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (response) {
+            console.log(response.message)
+            loadCategories();
+        },
+        error: function (xhr) {
+            console.error(xhr.responseText);
+            Swal.fire("Erro ao adicionar tarefa", "", "error");
+        },
+        complete: function () {
+            $('#spinnerTask').hide();
+        }
+    });
+}
+
 $(document).ready(function () {
     loadCategories();
 });
@@ -131,3 +159,38 @@ $(document).on('click', '#createCategory', function (e) {
     e.preventDefault();
     createCategory();
 });
+
+$(document).on('click', '.add-card', function () {
+    if ($(this).siblings('.card-form').length > 0) return;
+
+    const textarea = `
+        <div class="card-form mt-2 mb-3">
+            <textarea class="form-control mb-2" placeholder="Descreva a tarefa..." name="taskTitle" id="taskTitle"></textarea>
+
+            <div class="d-flex justify-content-between">
+                <button class="btn btn-sm btn-primary save-task">Adicionar</button>
+
+                <div class="spinner-border" id="spinnerTask" style="display:none;" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+
+                <button class="btn btn-sm btn-light cancel-task">Cancelar</button>
+            </div>
+        </div>
+    `;
+
+    $(this).before(textarea);
+});
+
+$(document).on('click', '.cancel-task', function () {
+    $(this).closest('.card-form').remove();
+});
+
+$(document).on('click', '.save-task', function (e) {
+    e.preventDefault();
+
+    const categoryId = $(this).closest('.kanban-column').data('category-id');
+
+    createTask(categoryId);
+});
+
