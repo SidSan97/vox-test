@@ -17,14 +17,13 @@ function loadCategories() {
             success: function (response) {
                 let container = $('#kanban-board');
                 container.empty();
-                console.log(response)
 
                 response.data.forEach(function (category) {
                     const tasksHtml = category.tasks.map(task => {
                         return `
-                            <div class="card-task d-flex justify-content-between align-items-center">
+                            <div class="card-task d-flex justify-content-between align-items-center" data-task-id="${task.id}">
                                 <div>
-                                    <div class="taskDescription">${task.title}</div>
+                                    <div class="taskTitle">${task.title}</div>
                                 </div>
                             </div>
                         `;
@@ -134,7 +133,6 @@ function createTask(categoryId) {
         data: {
             title: taskTitle,
             category_id: categoryId,
-            position: 6,
             _token: $('meta[name="csrf-token"]').attr('content')
         },
         success: function (response) {

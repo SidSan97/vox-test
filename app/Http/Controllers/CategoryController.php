@@ -11,9 +11,9 @@ class CategoryController extends Controller
 {
     public function show(int $id)
     {
-        $categories = Category::with('tasks')
-                    ->where('board_id', $id)
-                    ->get()->toArray();
+        $categories = Category::with(['tasks' => function ($query) {
+            $query->orderBy('position', 'asc');
+        }])->where('board_id', $id)->get()->toArray();
 
         return response()->json(['data' => $categories], 200);
     }

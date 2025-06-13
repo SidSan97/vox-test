@@ -22,6 +22,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/categories', [CategoryController::class, 'store'])->name('store.category');
 
     Route::post('/task', [TaskController::class, 'store'])->name('store.task');
+    Route::post('/tasks/reorder', [TaskController::class, 'reorder'])->name('reorder.task');
 });
 
 Route::middleware('auth')->group(function () {

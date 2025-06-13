@@ -17,15 +17,16 @@ class TaskController extends Controller
                 'category_id' => 'required|integer|min:1',
                 'title' => 'required|string|max:255',
                 'description' => 'string|max:500',
-                'position' => 'required|integer|min:0',
             ]);
+
+            $position = $this->getLastPositionTask($request->category_id);
 
             Task::create([
                 'category_id' => $request->category_id,
                 'user_id' => Auth::id(),
                 'title' => $request->title,
                 'description' => $request->description ?? null,
-                'position' => $request->position,
+                'position' => $position,
             ]);
 
             return response()->json(['message' => "Task criada com sucesso!"], 201);
@@ -36,4 +37,38 @@ class TaskController extends Controller
             return response()->json(['message' => "Erro ao criar task!"], 500);
         }
     }
+
+    public function reorder(Request $request)
+    {
+        try {
+            $request->validate([
+                'category_id' => 'required|integer|min:1',
+                'tasks' => 'required|array',
+            ]);
+
+            foreach ($request->tasks as $taskData) {
+                Task::where('id', $taskData['id'])->update([
+                    'category_id' => $request->category_id,
+                    'position' => $taskData['position']
+                ]);
+            }
+
+            return response()->json(['message' => 'Tarefas reordenadas']);
+
+        } catch(Exception $e) {
+            Log::error("Erro ao reordenar task: ", ['error' => $e->getMessage()]);
+
+            return response()->json(['message' => "Erro ao reordenar task!"], 500);
+        }
+    }
+
+    public function getLastPositionTask(int $categoryId)
+    {
+        $lastPosition = Task::where('category_id', $categoryId)->max('position');
+
+        $nextPosition = is_null($lastPosition) ? 0 : $lastPosition + 1;
+
+        return $nextPosition;
+    }
+
 }

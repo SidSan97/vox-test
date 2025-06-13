@@ -31,7 +31,41 @@ function initSortable() {
         new Sortable(el, {
             group: 'kanban',
             animation: 150,
-            ghostClass: 'bg-secondary'
+            ghostClass: 'bg-secondary',
+            onEnd: function (evt) {
+                const taskElement = evt.item;
+                const movedTaskId = evt.item.dataset.taskId;
+
+                const newCategoryElement = evt.to.closest('.kanban-column');
+                const newCategoryId = newCategoryElement.dataset.categoryId;
+
+                const reorderedTasks = Array.from(evt.to.children).map((child, index) => {
+                    return {
+                        id: child.dataset.taskId,
+                        position: index
+                    };
+                });
+
+                $.ajax({
+                    url: '/tasks/reorder',
+                    method: 'POST',
+                    data: {
+                        _token: $('meta[name="csrf-token"]').attr('content'),
+                        id: movedTaskId,
+                        tasks: reorderedTasks,
+                        category_id: newCategoryId
+                    },
+                    success: function (response) {
+                        console.log(response.message);
+                    },
+                    error: function (xhr) {
+                        console.error("Erro ao reordenar", xhr.responseText);
+                    },
+                    complete: function () {
+                        loadCategories();
+                    }
+                });
+            }
         });
     });
 }
