@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->unsignedBigInteger('board_id');
-            $table->integer('position')->comment("posição na ordenação");
             $table->timestamps();
 
             $table->foreign('board_id', 'board_id_fk')->references('id')->on('boards')->onDelete('cascade');

@@ -38,4 +38,9 @@ class Task extends Model
             'position' => 'integer',
         ];
     }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
 }

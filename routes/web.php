@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BoardController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -15,6 +16,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::post('/boards', [BoardController::class, 'store'])->name('create.board');
     Route::get('/boards', [BoardController::class, 'index'])->name('index.board');
+
+    Route::get('/categories/{id}', [CategoryController::class, 'show'])->name('show.category');
+    Route::post('/categories', [CategoryController::class, 'store'])->name('store.category');
 });
 
 Route::middleware('auth')->group(function () {

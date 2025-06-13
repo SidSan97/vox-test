@@ -18,33 +18,7 @@
 </head>
 <body>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg bg-secondary navbar-dark navbar-custom">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">DASHBOARD</a>
-            <button
-                class="navbar-toggler"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#navbarNav"
-                aria-controls="navbarNav"
-                aria-expanded="false"
-                aria-label="Toggle navigation"
-                >
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Notificações</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Perfil</a>
-                    </li>
-                </ul>
-            </div>
-      </div>
-    </nav>
+    @include('navbar')
 
     <!-- Botão de toggle para sidebar em telas pequenas -->
     <button class="sidebar-toggle-btn" id="sidebarToggle">
@@ -76,7 +50,12 @@
 
             <div class="mt-2" id="formBoard" style="display: none;">
                 <label for="name" class="text-light mb-1">Nome do quadro</label>
-                <input type="text" class="form-control w-25" id="name" name="name">
+                <div class="d-flex">
+                    <input type="text" class="form-control w-25 me-2" id="name" name="name">
+                    <button class="btn close-formBoard" onclick="toggleForm('close')">
+                        <i class="bi bi-x-lg text-light"></i>
+                    </button>
+                </div>
 
                 <button class="btn btn-success mt-4" id="createBoard">
                     <i class="bi bi-send"></i> Criar quadro

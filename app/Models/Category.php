@@ -20,7 +20,6 @@ class Category extends Model
     protected $fillable = [
         'title',
         'board_id',
-        'position',
     ];
 
     /**
@@ -32,7 +31,11 @@ class Category extends Model
     {
         return [
             'board_id' => 'integer',
-            'position' => 'integer',
         ];
+    }
+
+    public function tasks()
+    {
+        return $this->hasMany(Task::class);
     }
 }

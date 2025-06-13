@@ -28,4 +28,8 @@ class Board extends Model
             ->using(BoardUser::class);
     }
 
+    public function categories()
+    {
+        return $this->hasMany(Category::class);
+    }
 }
