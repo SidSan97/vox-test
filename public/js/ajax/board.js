@@ -1,0 +1,133 @@
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+
+function loadCategories() {
+    $(document).ready(function () {
+        $('#spinner').show();
+
+        const pathArray = window.location.pathname.split('/');
+        const boardId = pathArray[pathArray.length - 1];
+
+        $.ajax({
+            url: '/categories/' + boardId,
+            method: 'GET',
+            success: function (response) {
+                let container = $('#kanban-board');
+                container.empty();
+
+                response.data.forEach(function (category) {
+                    const tasksHtml = category.tasks.map(task => {
+                        return `
+                            <div class="card-task d-flex justify-content-between align-items-center">
+                                <div>
+                                    <div class="taskDescription">${task.description}</div>
+                                </div>
+                            </div>
+                        `;
+                    }).join('');
+
+                    const template = `
+                        <div class="kanban-column">
+                            <div class="kanban-header">${category.title}</div>
+
+                            <div class="sortable-coluna">
+                                ${tasksHtml}
+                            </div>
+
+                            <div class="add-card"><i class="bi bi-plus-lg"></i> Adicionar um cartão</div>
+                        </div>
+                    `;
+
+                    document.querySelector("#kanban-board").insertAdjacentHTML('beforeend', template);
+                });
+
+                const listContainerHtml = `
+                    <div id="list-container" class="d-inline-block">
+                        <button id="show-form-btn" class="btn add-list-btn">
+                            + Adicionar outra lista
+                        </button>
+
+                        <div id="list-form" class="add-list-form d-none mt-2">
+                            <input type="text" class="form-control mb-2" id="title" name="title" placeholder="Digite o nome da lista..." />
+                            <div class="d-flex justify-content-between">
+                                <button class="btn btn-primary btn-sm" id="createCategory">Adicionar Lista</button>
+                                <button id="cancel-btn" class="btn-close">
+                                    <i class="bi bi-x-lg text-dark"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                container.append(listContainerHtml);
+
+                initSortable();
+                initFormListeners();
+            },
+            error: function (xhr) {
+                console.error('Erro ao buscar quadros:', xhr.responseText);
+                 Swal.fire({
+                    title: "Erro ao buscar quadros!",
+                    icon: "error",
+                });
+            },
+            complete: function () {
+                $('#spinner').hide();
+            }
+        });
+    });
+}
+
+function createCategory() {
+    let title = $('#title').val();
+    const pathArray = window.location.pathname.split('/');
+    const boardId = pathArray[pathArray.length - 1];
+
+    if (!title.trim()) {
+        Swal.fire({
+            title: "Informe o nome da categoria!",
+            icon: "warning"
+        });
+
+        return;
+    }
+
+    $.ajax({
+        url: '/categories',
+        method: 'POST',
+        data: {
+            title: title,
+            board_id: boardId
+        },
+        success: function (response) {
+            Swal.fire({
+                title: response.message,
+                icon: "success",
+                showConfirmButton: true,
+                willClose: () => {
+                    $('#title').val('');
+                    loadCategories();
+                }
+            });
+        },
+        error: function (xhr) {
+            console.error(xhr.responseText);
+            Swal.fire({
+                title: "Erro ao criar quadro. Tente novamente mais tarde!",
+                icon: "error",
+            });
+        }
+    });
+}
+
+$(document).ready(function () {
+    loadCategories();
+});
+
+$(document).on('click', '#createCategory', function (e) {
+    e.preventDefault();
+    createCategory();
+});
