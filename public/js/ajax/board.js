@@ -72,7 +72,7 @@ function loadCategories() {
                 const listContainerHtml = `
                     <div id="list-container" class="d-inline-block">
                         <button id="show-form-btn" class="btn add-list-btn">
-                            + Adicionar outra lista
+                            + Criar lista
                         </button>
 
                         <div id="list-form" class="add-list-form d-none mt-2">

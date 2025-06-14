@@ -11,13 +11,16 @@ class CategoryController extends Controller
 {
     public function show(int $id)
     {
+        $boardController = new BoardController();
+        $exists = $boardController->checkIfBoardExits($id);
+
+        if(!$exists) {
+            return response()->json(['redirect' => route('desktop')]);
+        }
+
         $categories = Category::with(['tasks' => function ($query) {
             $query->orderBy('position', 'asc');
         }])->where('board_id', $id)->get()->toArray();
-
-        if(empty($categories)) {
-            return response()->json(['redirect' => route('desktop')]);
-        }
 
         return response()->json(['data' => $categories], 200);
     }

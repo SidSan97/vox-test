@@ -49,6 +49,27 @@ class BoardController extends Controller
         }
     }
 
+    public function update(Request $request)
+    {
+        try {
+            $request->validate([
+                'id' => 'required|integer|min:1',
+                'title' => 'required|string|max:255',
+            ]);
+
+            Board::find($request->id)->update([
+                'name' => $request->title,
+            ]);
+
+            return response()->json(['message' => "Quadro atualizado com sucesso!"], 200);
+
+        }catch (Exception $e) {
+            Log::error("Erro ao atualizar o quadro: ", ['error' => $e->getMessage()]);
+
+            return response()->json(['message' => "Erro ao atualizar o quadro. Tente novamente mais tarde!"], 500);
+        }
+    }
+
     public function delete(int $id)
     {
         try {
@@ -62,5 +83,11 @@ class BoardController extends Controller
 
             return response()->json(['message' => "Erro ao excluir quadro. Tente novamente mais tarde!"], 500);
         }
+    }
+
+    public function checkIfBoardExits(int $id) {
+        $result = Board::where('id', $id)->exists();
+
+        return $result;
     }
 }

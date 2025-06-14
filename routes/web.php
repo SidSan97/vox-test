@@ -17,6 +17,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::post('/boards', [BoardController::class, 'store'])->name('create.board');
     Route::get('/boards', [BoardController::class, 'index'])->name('index.board');
+    Route::put('/boards/{id}', [BoardController::class, 'update'])->name('update.board');
     Route::delete('/boards/{id}', [BoardController::class, 'delete'])->name('index.board');
 
     Route::get('/categories/{id}', [CategoryController::class, 'show'])->name('show.category');
