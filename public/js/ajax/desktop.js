@@ -15,13 +15,33 @@ function loadBoards() {
                 let container = $('#boardsList');
                 container.empty();
 
-                response.data.forEach(function (quadro) {
+                response.data.forEach(function (board) {
+                    const icon = board.pivot.role === "admin" 
+                                ? `<i class="bi bi-three-dots-vertical text-light dropdown-toggle me-3" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></i>` 
+                                : "";
+
                     const link = `
-                        <a class="my-squad me-3 nav-link" href="/board/${quadro.id}">
-                            <span>${quadro.name}</span>
-                        </a>
+                        <div class="d-flex">
+                            <a class="my-squad me-1 nav-link" href="/board/${board.id}">
+                                <span>${board.name}</span>                       
+                            </a>
+
+                            <div class="dropdown">
+                                ${icon}
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                    <li><a class="dropdown-item" id="deleteBoard">Excluir</a></li>
+                                    <li id="editBoard">
+                                        <a class="dropdown-item" data-board-id="${board.id}">
+                                            Editar
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>    
                     `;
                     container.append(link);
+
+                    editEvent();
                 });
             },
             error: function (xhr) {
@@ -82,6 +102,10 @@ function createBoard() {
     });
 }
 
+function editBoard() {
+    
+}
+
 $(document).ready(function () {
     loadBoards();
 
@@ -90,3 +114,11 @@ $(document).ready(function () {
         createBoard();
     });
 });
+
+function editEvent() {
+    $(document).on('click', '#editBoard a', function (e) {
+        e.preventDefault();
+        const boardId = $(this).data('board-id');
+        editBoard(boardId);
+    });
+}
