@@ -16,7 +16,7 @@ class CategoryController extends Controller
         }])->where('board_id', $id)->get()->toArray();
 
         if(empty($categories)) {
-            return redirect()->route('index.board');
+            return response()->json(['redirect' => route('desktop')]);
         }
 
         return response()->json(['data' => $categories], 200);

@@ -15,6 +15,11 @@ function loadCategories() {
             url: '/categories/' + boardId,
             method: 'GET',
             success: function (response) {
+                if (response.redirect) {
+                    window.location.href = response.redirect;
+                    return;
+                }
+                
                 let container = $('#kanban-board');
                 container.empty();
 
