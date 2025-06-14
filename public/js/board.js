@@ -71,17 +71,29 @@ function initSortable() {
 }
 
 //modal Bootstrap
-function activateModal()
-{
-    $(document).on('click', '.card-task', function () {
-        const title = $(this).data('task-title');
-        const description = $(this).data('task-description');
+function activateModal() {
+    $(document).on('click', '.card-task', async function () {
+        const taskId = $(this).data('task-id');
 
-        $('#taskModalLabel').text(title);
-        $('#taskModalBody').text(description);
+        try {
+            const data = await loadTask(taskId);
 
-        const modal = new bootstrap.Modal(document.getElementById('taskModal'));
-        modal.show();
+            $('#taskModalTitle').val('').val(data.title);
+            $('#taskModalBody').val('').val(data.description);
+            $('#taskModalBody').text(data.description);
+            $('#taskModalCreated').text(formattingDate(data.created_at));
+            $('#taskModalUpdated').text(formattingDate(data.updated_at));
+            $('#taskModalId').text(data.id);
+
+            const modal = new bootstrap.Modal(document.getElementById('taskModal'));
+            modal.show();
+        } catch (error) {
+            console.error("Erro ao carregar task:", error);
+            Swal.fire({
+                title: "Erro ao buscar task!",
+                icon: "error",
+            });
+        }
     });
 }
 
@@ -99,3 +111,28 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById("bodyBoard").removeAttribute("style");
     });
 });
+
+function formattingDate(originalDate) {
+    const isoDate = originalDate;
+    const dateObj = new Date(isoDate);
+
+    const formattedDate = dateObj.toLocaleString("pt-BR", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false
+    });
+
+    return formattedDate;
+}
+
+function iconDisplay(id, status) {
+    if(status === "show") {
+        $('#deleteTask' + id).show();
+    } else if (status === "hide"){
+        $('#deleteTask' + id).hide();
+    }
+}
+

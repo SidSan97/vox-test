@@ -6,7 +6,7 @@ $.ajaxSetup({
 
 function loadCategories() {
     $(document).ready(function () {
-        $('#spinner').show();
+        $('#boardSpinner').show();
 
         const pathArray = window.location.pathname.split('/');
         const boardId = pathArray[pathArray.length - 1];
@@ -21,13 +21,24 @@ function loadCategories() {
                 response.data.forEach(function (category) {
                     const tasksHtml = category.tasks.map(task => {
                         return `
-                            <div class="card-task d-flex justify-content-between align-items-center"
-                                data-task-title="${task.title}"
-                                 data-task-id="${task.id}"
-                                data-task-description="${task.description ?? 'Sem descrição'}"
+                            <div class="d-flex mainDivTask"
+                                onmouseenter="iconDisplay(${task.id}, 'show')"
+                                onmouseleave="iconDisplay(${task.id}, 'hide')"                             
                             >
+                                <div class="card-task d-flex justify-content-between align-items-center"
+                                    data-task-title="${task.title}"
+                                    data-task-id="${task.id}"
+                                    data-task-description="${task.description}"
+                                    data-task-created="${task.created_at}"
+                                    data-task-updated="${task.updated_at}"                                
+                                >
+                                    <div>
+                                        <div class="taskTitle">${task.title}</div>
+                                    </div>
+                                </div>
+
                                 <div>
-                                    <div class="taskTitle">${task.title}</div>
+                                    <i class="bi bi-trash deleteTask" data-task-taskid="${task.id}" id="deleteTask${task.id}"></i>
                                 </div>
                             </div>
                         `;
@@ -81,7 +92,7 @@ function loadCategories() {
                 });
             },
             complete: function () {
-                $('#spinner').hide();
+                $('#boardSpinner').hide();
             }
         });
     });

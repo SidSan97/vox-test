@@ -2,7 +2,6 @@
     background-color: rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(8px);
     color: #fff;
-    border-radius: 8px;
     padding: 10px 15px;
     border: none;
     cursor: pointer;
@@ -36,4 +35,14 @@
 
 .modal-backdrop.show {
     opacity: 0.1 !important;
+}
+
+.modal-body textarea {
+    resize: none !important;
+}
+
+.bi-trash {
+    cursor: pointer;
+    color: rgb(220, 53, 69);
+    display: none;
 }

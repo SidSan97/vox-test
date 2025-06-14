@@ -31,7 +31,11 @@
     <div class="main-content">
         <h2>Bem-vindo ao quadro Dashboard</h2> <br>
 
-        <div class="kanban-board" id="kanban-board"></div>
+        <div class="kanban-board" id="kanban-board">
+            <div id="boardSpinner" class="spinner-border" style="display: none;" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
     </div>
 
     <!-- Modal -->
@@ -43,12 +47,43 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="closeModal()"></button>
                 </div>
 
-                <div class="modal-body" id="taskModalBody">
-                    ...
+                <div class="modal-body">
+                    <div class="row mb-2">
+                        <div class="col-12 mb-3">
+                            <label for="taskModalTitle">Título</label>
+                            <textarea class="form-control" id="taskModalTitle" cols="30" rows="1"></textarea>
+                        </div>
+
+                        <div class="col-12">
+                            <label for="taskModalBody">Descrição</label>
+                            <textarea class="form-control" id="taskModalBody" cols="30" rows="3">
+                            </textarea>
+                        </div> 
+
+                        <textarea id="taskModalId" class="d-none"></textarea>
+                    </div>
+
+                    <div class="d-flex w-100 justify-content-center mt-2 mb-2">
+                        <div id="modalSpinner" class="spinner-border" style="display: none;" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6">
+                            <strong>Criado em:</strong>
+                            <p id="taskModalCreated"></p>
+                        </div>
+
+                        <div class="col-6">
+                            <strong>Última atualização:</strong>
+                            <p id="taskModalUpdated"></p>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">Salvar mudanças</button>
+                    <button type="button" class="btn btn-primary" id="editInfoTask">Salvar mudanças</button>
                 </div>
             </div>
         </div>
@@ -58,6 +93,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="{{asset('js/board.js')}}"></script>
+    <script src="{{asset('js/ajax/task.js')}}"></script>
     <script src="{{asset('js/ajax/board.js')}}"></script>
 
   </body>

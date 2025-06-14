@@ -40,13 +40,17 @@ body {
   margin-bottom: 15px;
 }
 
+.mainDivTask {
+  background-color: #1e2a38;
+  margin-bottom: 5px;
+}
+
 .card-task {
   background-color: #1e2a38;
   padding: 12px;
-  border-radius: 8px;
-  margin-bottom: 10px;
   cursor: grab;
   transition: background-color 0.2s;
+  width: 90%;
 }
 
 .card-task:hover {

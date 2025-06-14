@@ -10,6 +10,18 @@ use Illuminate\Support\Facades\Log;
 
 class TaskController extends Controller
 {
+    public function show(int $id) {
+        try {
+            $task = Task::where('id', $id)->first();
+
+            return response()->json(['data' => $task], 200);
+        } catch (Exception $e) {
+            Log::error("Erro ao carregar task: ", ['error' => $e->getMessage()]);
+
+            return response()->json(['message' => "Erro ao carregar task. Tente novamente."], 500);
+        }
+    }
+
     public function store(Request $request)
     {
         try {
@@ -59,6 +71,44 @@ class TaskController extends Controller
             Log::error("Erro ao reordenar task: ", ['error' => $e->getMessage()]);
 
             return response()->json(['message' => "Erro ao reordenar task!"], 500);
+        }
+    }
+
+    public function edit(Request $request)
+    {
+        try {
+            $request->validate([
+                'id' => 'required|integer|min:1',
+                'title' => 'required|string|max:255',
+                'description' => 'string|max:500',
+            ]);
+
+            Task::find($request->id)->update([
+                'title' => $request->title,
+                'description' => $request->description ?? null,
+            ]);
+
+            return response()->json(['message' => "Tarefa atualizada com sucesso!"], 200);
+
+        }catch (Exception $e) {
+            Log::error("Erro ao atualizar a tarefa: ", ['error' => $e->getMessage()]);
+
+            return response()->json(['message' => "Erro ao atualizar a tarefa. Tente novamente mais tarde!"], 500);
+        }
+    }
+
+    public function delete(int $id) 
+    {
+        try {
+            $task = Task::findOrFail($id);
+            $task->delete();
+
+            return response()->json(['message' => "Tarefa excluída com sucesso!"], 200);
+
+        } catch (Exception $e) {
+            Log::error("Erro ao excluir tarefa: ", ['error' => $e->getMessage()]);
+
+            return response()->json(['message' => "Erro ao excluir tarefa. Tente novamente mais tarde!"], 500);
         }
     }
 
