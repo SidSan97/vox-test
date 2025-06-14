@@ -15,6 +15,10 @@ class CategoryController extends Controller
             $query->orderBy('position', 'asc');
         }])->where('board_id', $id)->get()->toArray();
 
+        if(empty($categories)) {
+            return redirect()->route('index.board');
+        }
+
         return response()->json(['data' => $categories], 200);
     }
 

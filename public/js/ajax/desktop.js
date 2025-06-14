@@ -29,7 +29,11 @@ function loadBoards() {
                             <div class="dropdown">
                                 ${icon}
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                    <li><a class="dropdown-item" id="deleteBoard">Excluir</a></li>
+                                    <li>
+                                        <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#del${board.id}">
+                                            Excluir
+                                        </a>
+                                    </li>
                                     <li id="editBoard">
                                         <a class="dropdown-item" data-board-id="${board.id}">
                                             Editar
@@ -37,12 +41,35 @@ function loadBoards() {
                                     </li>
                                 </ul>
                             </div>
-                        </div>    
-                    `;
-                    container.append(link);
+                        </div>   
+                        
+                        <div class="modal fade" id="del${board.id}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Atenção!</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
 
-                    editEvent();
+                                    <div class="modal-body">
+                                        Deseja mesmo excluir este quadro? Todo seu conteudo também irá ser apagado.
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">NÃO</button>
+                                        <button type="button" class="btn btn-danger deleteBoardBtn" data-deleteboard-id="${board.id}">
+                                            <span>SIM</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    container.append(link);    
                 });
+
+                editEvent();
+                deleteEvent();
             },
             error: function (xhr) {
                 console.error('Erro ao buscar quadros:', xhr.responseText);
@@ -102,8 +129,36 @@ function createBoard() {
     });
 }
 
-function editBoard() {
-    
+function editBoard(boardId) {
+    console.log(boardId)
+}
+
+function deleteBoard(boardId) {
+    $.ajax({
+        url: '/boards/' + boardId,
+        method: 'DELETE',
+        data: {},
+        success: function (response) {
+            console.log(response.message)
+            Swal.fire({
+                title: response.message,
+                icon: "success",
+                showConfirmButton: true,
+                willClose: () => {
+                    removeclassesModal();
+                    escButtonEvent();
+                    loadBoards();
+                }
+            });
+        },
+        error: function (xhr) {
+            console.error(xhr.responseText);
+            Swal.fire({
+                title: "Erro ao excluir quadro!",
+                icon: "error",
+            });
+        },
+    });
 }
 
 $(document).ready(function () {
@@ -122,3 +177,13 @@ function editEvent() {
         editBoard(boardId);
     });
 }
+
+function deleteEvent() {
+    $(document).off('click', '.deleteBoardBtn').on('click', '.deleteBoardBtn', function (e) {
+        e.preventDefault();
+        const boardId = $(this).data('deleteboard-id');
+        console.log(boardId)
+        deleteBoard(boardId);
+    });
+}
+

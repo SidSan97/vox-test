@@ -38,7 +38,10 @@ function loadCategories() {
                                 </div>
 
                                 <div>
-                                    <i class="bi bi-trash deleteTask" data-task-taskid="${task.id}" id="deleteTask${task.id}"></i>
+                                    <i class="bi bi-trash deleteTask" 
+                                        data-task-taskid="${task.id}" 
+                                        id="deleteTask${task.id}"
+                                    ></i>
                                 </div>
                             </div>
                         `;

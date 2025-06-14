@@ -48,4 +48,19 @@ class BoardController extends Controller
             return response()->json(['message' => "Erro ao criar quadro!"], 500);
         }
     }
+
+    public function delete(int $id)
+    {
+        try {
+            $task = Board::findOrFail($id);
+            $task->delete();
+
+            return response()->json(['message' => "Qaudro excluído com sucesso!"], 200);
+
+        } catch (Exception $e) {
+            Log::error("Erro ao excluir quadro: ", ['error' => $e->getMessage()]);
+
+            return response()->json(['message' => "Erro ao excluir quadro. Tente novamente mais tarde!"], 500);
+        }
+    }
 }
