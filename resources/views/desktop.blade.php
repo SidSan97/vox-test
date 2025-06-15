@@ -20,46 +20,43 @@
     <!-- Navbar -->
     @include('navbar')
 
-    <!-- Botão de toggle para sidebar em telas pequenas -->
-    <button class="sidebar-toggle-btn" id="sidebarToggle">
-        <i class="bi bi-list"></i>
-    </button>
+    <div class="container-fluid">
+        <div class="main-content">
+            <h3 class="text-light ms-2 mt-4 mb-5">Área de trabalho</h3>
 
-    @include('sidebar')
+            <div class="container-fluid">
+                <p class="text-light">Meus quadros</p>
 
-    <div class="main-content">
-        <h3 class="text-light ms-2 mt-4 mb-5">Área de trabalho</h3>
-
-        <div class="container-fluid">
-            <p class="text-light">Meus quadros</p>
-
-            <div class="d-flex" id="boardsList">
-                <div id="spinner" class="mt-3 text-light" style="display: none;">
-                    <div class="spinner-border text-light" role="status">
-                        <span class="visually-hidden">Carregando...</span>
-                    </div>
-                    <span class="ms-2">Criando quadro...</span>
+                <div class="row" id="boardsList">
+                   
+                        <div id="spinner" class="mt-3 text-light" style="display: none;">
+                            <div class="spinner-border text-light" role="status">
+                                <span class="visually-hidden">Carregando...</span>
+                            </div>
+                            <span class="ms-2">Carregando quadros...</span>
+                        </div>
+                     
                 </div>
-            </div>
 
-            <hr class="text-light"> <br>
+                <hr class="text-light"> <br>
 
-            <button class="btn btn-primary" onclick="toggleForm()">
-                <i class="bi bi-plus-lg"></i> Novo quadro
-            </button>
+                <button class="btn btn-primary" onclick="toggleForm()">
+                    <i class="bi bi-plus-lg"></i> Novo quadro
+                </button>
 
-            <div class="mt-2" id="formBoard" style="display: none;">
-                <label for="name" class="text-light mb-1">Nome do quadro</label>
-                <div class="d-flex">
-                    <input type="text" class="form-control w-25 me-2" id="name" name="name">
-                    <button class="btn close-formBoard" onclick="toggleForm('close')">
-                        <i class="bi bi-x-lg text-light"></i>
+                <div class="mt-2" id="formBoard" style="display: none;">
+                    <label for="name" class="text-light mb-1">Nome do quadro</label>
+                    <div class="d-flex">
+                        <input type="text" class="form-control w-25 me-2" id="name" name="name">
+                        <button class="btn close-formBoard" onclick="toggleForm('close')">
+                            <i class="bi bi-x-lg text-light"></i>
+                        </button>
+                    </div>
+
+                    <button class="btn btn-success mt-4" id="createBoard">
+                        <i class="bi bi-send"></i> Criar quadro
                     </button>
                 </div>
-
-                <button class="btn btn-success mt-4" id="createBoard">
-                    <i class="bi bi-send"></i> Criar quadro
-                </button>
             </div>
         </div>
     </div>

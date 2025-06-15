@@ -21,7 +21,8 @@ function loadBoards() {
                                 : "";
 
                     const link = `
-                        <div class="d-flex">
+                    <div class="col-md-6 mb-2">
+                        <div class="d-flex" style="border:1px solid; width: 100%;">
                             <a class="my-squad me-1 nav-link" href="/board/${board.id}">
                                 <span>${board.name}</span>                       
                             </a>
@@ -101,6 +102,7 @@ function loadBoards() {
                                     </div>
                                 </div>
                             </div>
+                        </div>
                         </div>
                     `;
                     container.append(link);    

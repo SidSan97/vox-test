@@ -26,8 +26,6 @@
         <i class="bi bi-list"></i>
     </button>
 
-    @include('sidebar')
-
     <div class="main-content">
         <h2>Bem-vindo ao quadro Dashboard</h2> <br>
 
