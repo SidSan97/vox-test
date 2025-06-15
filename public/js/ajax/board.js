@@ -148,8 +148,7 @@ function loadCategories() {
                     document.querySelector("#kanban-board").insertAdjacentHTML('beforeend', template);
              
                 });
-
-                activateModal();
+         
                 deleteCategoryEvent();
                 editCategoryEvent();
 
@@ -326,6 +325,7 @@ function updateCategory(id) {
 
 $(document).ready(function () {
     loadCategories();
+    activateModal();
 });
 
 $(document).on('click', '#createCategory', function (e) {
