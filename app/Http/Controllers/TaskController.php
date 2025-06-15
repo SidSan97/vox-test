@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TaskReorderRequest;
+use App\Http\Requests\TaskStoreRequest;
+use App\Http\Requests\TaskUpdateRequest;
 use App\Models\Task;
 use Exception;
 use Illuminate\Http\Request;
@@ -10,6 +13,11 @@ use Illuminate\Support\Facades\Log;
 
 class TaskController extends Controller
 {
+    public function __construct()
+    {
+
+    }
+
     public function show(int $id) {
         try {
             $task = Task::where('id', $id)->first();
@@ -22,22 +30,18 @@ class TaskController extends Controller
         }
     }
 
-    public function store(Request $request)
+    public function store(TaskStoreRequest $request)
     {
         try {
-            $request->validate([
-                'category_id' => 'required|integer|min:1',
-                'title' => 'required|string|max:255',
-                'description' => 'string|max:500',
-            ]);
+            $data = $request->validated();
 
-            $position = $this->getLastPositionTask($request->category_id);
+            $position = $this->getLastPositionTask($data['category_id']);
 
             Task::create([
-                'category_id' => $request->category_id,
+                'category_id' => $data['category_id'],
                 'user_id' => Auth::id(),
-                'title' => $request->title,
-                'description' => $request->description ?? null,
+                'title' => $data['title'],
+                'description' => $data['description'] ?? null,
                 'position' => $position,
             ]);
 
@@ -50,17 +54,14 @@ class TaskController extends Controller
         }
     }
 
-    public function reorder(Request $request)
+    public function reorder(TaskReorderRequest $request)
     {
         try {
-            $request->validate([
-                'category_id' => 'required|integer|min:1',
-                'tasks' => 'required|array',
-            ]);
+            $data = $request->validated();
 
-            foreach ($request->tasks as $taskData) {
+            foreach ($data['tasks'] as $taskData) {
                 Task::where('id', $taskData['id'])->update([
-                    'category_id' => $request->category_id,
+                    'category_id' => $data['category_id'],
                     'position' => $taskData['position']
                 ]);
             }
@@ -74,18 +75,14 @@ class TaskController extends Controller
         }
     }
 
-    public function edit(Request $request)
+    public function edit(TaskUpdateRequest $request)
     {
         try {
-            $request->validate([
-                'id' => 'required|integer|min:1',
-                'title' => 'required|string|max:255',
-                'description' => 'string|max:500',
-            ]);
+            $data = $request->validated();
 
-            Task::find($request->id)->update([
-                'title' => $request->title,
-                'description' => $request->description ?? null,
+            Task::find($data['id'])->update([
+                'title' => $data['title'],
+                'description' => $data['description'] ?? null,
             ]);
 
             return response()->json(['message' => "Tarefa atualizada com sucesso!"], 200);

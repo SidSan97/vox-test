@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\BoardStoreRequest;
+use App\Http\Requests\BoardUpdateRequest;
 use App\Models\Board;
 use App\Models\User;
 use Exception;
@@ -27,15 +29,13 @@ class BoardController extends Controller
         }
     }
 
-    public function store(Request $request)
+    public function store(BoardStoreRequest $request)
     {
         try {
-            $request->validate([
-                'name' => 'required|string|max:255',
-            ]);
+            $data = $request->validated();
 
             $board = Board::create([
-                'name' => $request->name,
+                'name' => $data['name'],
             ]);
 
             $board->users()->attach(Auth::id(), ['role' => 'admin']);
@@ -49,16 +49,13 @@ class BoardController extends Controller
         }
     }
 
-    public function update(Request $request)
+    public function update(BoardUpdateRequest $request)
     {
         try {
-            $request->validate([
-                'id' => 'required|integer|min:1',
-                'title' => 'required|string|max:255',
-            ]);
+            $data = $request->validated();
 
-            Board::find($request->id)->update([
-                'name' => $request->title,
+            Board::find($data['id'])->update([
+                'name' => $data['title'],
             ]);
 
             return response()->json(['message' => "Quadro atualizado com sucesso!"], 200);

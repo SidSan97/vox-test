@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CategoryStoreRequest;
 use App\Models\Category;
 use Exception;
 use Illuminate\Http\Request;
@@ -25,17 +26,14 @@ class CategoryController extends Controller
         return response()->json(['data' => $categories], 200);
     }
 
-    public function store(Request $request)
+    public function store(CategoryStoreRequest $request)
     {
         try {
-            $request->validate([
-                'title' => 'required|string|max:255',
-                'board_id' => 'required|integer|min:1'
-            ]);
+            $data = $request->validated();
 
             Category::create([
-                'title' => $request->title,
-                'board_id' => $request->board_id,
+                'title' => $data['title'],
+                'board_id' => $data['board_id'],
             ]);
 
             return response()->json(['message' => "Categoria criada com sucesso!"], 201);
