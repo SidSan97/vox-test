@@ -14,17 +14,12 @@
           rel="stylesheet"
         />
         <link rel="stylesheet" href="{{asset('css/home.css')}}">
-        <link rel="stylesheet" href="{{asset('css/sidebar.css')}}">
         <link rel="stylesheet" href="{{asset('css/board.css')}}">
 
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     </head>
   <body id="bodyBoard">
     @include('navbar')
-
-    <button class="sidebar-toggle-btn" id="sidebarToggle">
-        <i class="bi bi-list"></i>
-    </button>
 
     <div class="main-content">
         <h2>Bem-vindo ao quadro Dashboard</h2> <br>
@@ -56,7 +51,7 @@
                             <label for="taskModalBody">Descrição</label>
                             <textarea class="form-control" id="taskModalBody" cols="30" rows="3">
                             </textarea>
-                        </div> 
+                        </div>
 
                         <textarea id="taskModalId" class="d-none"></textarea>
                     </div>
