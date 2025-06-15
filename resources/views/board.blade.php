@@ -22,7 +22,7 @@
     @include('navbar')
 
     <div class="main-content">
-        <h2>Bem-vindo ao quadro Dashboard</h2> <br>
+        <h2>Bem-vindo ao quadro</h2> <br>
 
         <div class="kanban-board" id="kanban-board">
             <div id="boardSpinner" class="spinner-border" style="display: none;" role="status">
