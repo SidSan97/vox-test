@@ -21,7 +21,7 @@ class TaskRepository {
     public function showTask(int $id)
     {
         try {
-            $task = $this->taskRepository::where('id', $id)->first();
+            $task = $this->taskRepository::where('id', $id)->with('user:id,name')->first();
 
             return response()->json(['data' => $task], 200);
         } catch (Exception $e) {

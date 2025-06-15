@@ -78,6 +78,7 @@ function activateModal() {
 
         try {
             const data = await loadTask(taskId);
+            console.log(data)
 
             $('#taskModalTitle').val('').val(data.title);
             $('#taskModalBody').val('').val(data.description);
@@ -85,6 +86,7 @@ function activateModal() {
             $('#taskModalCreated').text(formattingDate(data.created_at));
             $('#taskModalUpdated').text(formattingDate(data.updated_at));
             $('#taskModalId').text(data.id);
+            $('#taskAuthor').text(data.user.name);
 
             const modal = new bootstrap.Modal(document.getElementById('taskModal'));
             modal.show();

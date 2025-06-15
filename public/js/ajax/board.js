@@ -65,9 +65,10 @@ function loadCategories() {
                     `;
 
                     document.querySelector("#kanban-board").insertAdjacentHTML('beforeend', template);
-
-                    activateModal();
+             
                 });
+
+                activateModal();
 
                 const listContainerHtml = `
                     <div id="list-container" class="d-inline-block">
