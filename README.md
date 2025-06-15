@@ -2,6 +2,7 @@
 <ul>
   <li> Laravel 12 </li>
   <li> Bootstrap </li>
+    <li> Blade </li>
   <li> JQuery </li>
   <li> Ajx </li>
   <li> Bootstrap Icons </li>
