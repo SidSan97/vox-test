@@ -78,7 +78,6 @@ function activateModal() {
 
         try {
             const data = await loadTask(taskId);
-            console.log(data)
 
             $('#taskModalTitle').val('').val(data.title);
             $('#taskModalBody').val('').val(data.description);
