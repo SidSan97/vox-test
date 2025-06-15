@@ -3,45 +3,32 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CategoryStoreRequest;
-use App\Models\Category;
-use Exception;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
+use App\Repository\CategoriesRepository;
 
 class CategoryController extends Controller
 {
+    protected $categoryRepository;
+
+    public function __construct(
+        CategoriesRepository $categoriesRepository,
+    )
+    {
+        $this->categoryRepository = $categoriesRepository;
+    }
+
     public function show(int $id)
     {
-        $boardController = new BoardController();
-        $exists = $boardController->checkIfBoardExits($id);
+        $data = $this->categoryRepository->showCategories($id);
 
-        if(!$exists) {
-            return response()->json(['redirect' => route('desktop')]);
-        }
-
-        $categories = Category::with(['tasks' => function ($query) {
-            $query->orderBy('position', 'asc');
-        }])->where('board_id', $id)->get()->toArray();
-
-        return response()->json(['data' => $categories], 200);
+        return $data;
     }
 
     public function store(CategoryStoreRequest $request)
     {
-        try {
-            $data = $request->validated();
+        $data = $request->validated();
 
-            Category::create([
-                'title' => $data['title'],
-                'board_id' => $data['board_id'],
-            ]);
+        $result = $this->categoryRepository->storeCategory($data);
 
-            return response()->json(['message' => "Categoria criada com sucesso!"], 201);
-
-        } catch(Exception $e) {
-            Log::error("Erro ao criar categoria: ", ['error' => $e->getMessage()]);
-
-            return response()->json(['message' => "Erro ao criar categoria!"], 500);
-        }
+        return $result;
     }
 }

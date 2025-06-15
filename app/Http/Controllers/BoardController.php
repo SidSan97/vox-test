@@ -6,6 +6,7 @@ use App\Http\Requests\BoardStoreRequest;
 use App\Http\Requests\BoardUpdateRequest;
 use App\Models\Board;
 use App\Models\User;
+use App\Repository\BoardRepository;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,78 +14,44 @@ use Illuminate\Support\Facades\Log;
 
 class BoardController extends Controller
 {
+    protected $boardRepository;
+
+    public function __construct(
+        BoardRepository $boardRepository,
+    )
+    {
+        $this->boardRepository = $boardRepository;
+    }
+
     public function index()
     {
-        try {
-            $user = User::find(Auth::id());
+        $data = $this->boardRepository->indexBoard();
 
-            $boards = $user->boards()->wherePivotIn('role', ['admin', 'collaborator'])->get()->toArray();
-
-            return response()->json(['data' => $boards], 200);
-
-        } catch(Exception $e) {
-            Log::error("Erro ao carregar quadros: ", ['error' => $e->getMessage()]);
-
-            return response()->json(['message' => "Erro ao carregar quadro!"], 500);
-        }
+        return $data;
     }
 
     public function store(BoardStoreRequest $request)
     {
-        try {
-            $data = $request->validated();
+        $data = $request->validated();
 
-            $board = Board::create([
-                'name' => $data['name'],
-            ]);
+        $result = $this->boardRepository->storeBoard($data);
 
-            $board->users()->attach(Auth::id(), ['role' => 'admin']);
-
-            return response()->json(['message' => 'Quadro criado com sucesso!'], 201);
-
-        } catch(Exception $e) {
-            Log::error("Erro ao criar quadro: ", ['error' => $e->getMessage()]);
-
-            return response()->json(['message' => "Erro ao criar quadro!"], 500);
-        }
+        return $result;
     }
 
     public function update(BoardUpdateRequest $request)
     {
-        try {
-            $data = $request->validated();
+        $data = $request->validated();
 
-            Board::find($data['id'])->update([
-                'name' => $data['title'],
-            ]);
+        $result = $this->boardRepository->updateBoard($data);
 
-            return response()->json(['message' => "Quadro atualizado com sucesso!"], 200);
-
-        }catch (Exception $e) {
-            Log::error("Erro ao atualizar o quadro: ", ['error' => $e->getMessage()]);
-
-            return response()->json(['message' => "Erro ao atualizar o quadro. Tente novamente mais tarde!"], 500);
-        }
+        return $result;
     }
 
     public function delete(int $id)
     {
-        try {
-            $task = Board::findOrFail($id);
-            $task->delete();
+        $data = $this->boardRepository->deleteBoard($id);
 
-            return response()->json(['message' => "Qaudro excluído com sucesso!"], 200);
-
-        } catch (Exception $e) {
-            Log::error("Erro ao excluir quadro: ", ['error' => $e->getMessage()]);
-
-            return response()->json(['message' => "Erro ao excluir quadro. Tente novamente mais tarde!"], 500);
-        }
-    }
-
-    public function checkIfBoardExits(int $id) {
-        $result = Board::where('id', $id)->exists();
-
-        return $result;
+        return $data;
     }
 }
