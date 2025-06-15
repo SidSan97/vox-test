@@ -97,7 +97,7 @@ class TaskController extends Controller
         }
     }
 
-    public function delete(int $id) 
+    public function delete(int $id)
     {
         try {
             $task = Task::findOrFail($id);

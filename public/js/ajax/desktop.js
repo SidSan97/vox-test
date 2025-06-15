@@ -16,15 +16,15 @@ function loadBoards() {
                 container.empty();
 
                 response.data.forEach(function (board) {
-                    const icon = board.pivot.role === "admin" 
-                                ? `<i class="bi bi-three-dots-vertical text-light dropdown-toggle me-3" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></i>` 
+                    const icon = board.pivot.role === "admin"
+                                ? `<i class="bi bi-three-dots-vertical text-light dropdown-toggle me-3" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></i>`
                                 : "";
 
                     const link = `
-                    <div class="col-md-6 mb-2">
-                        <div class="d-flex" style="border:1px solid; width: 100%;">
+                    <div class="col-md-2 col-6 mb-2">
+                        <div class="d-flex">
                             <a class="my-squad me-1 nav-link" href="/board/${board.id}">
-                                <span>${board.name}</span>                       
+                                <span>${board.name}</span>
                             </a>
 
                             <div class="dropdown">
@@ -47,8 +47,8 @@ function loadBoards() {
                                     </li>
                                 </ul>
                             </div>
-                        </div>   
-                        
+                        </div>
+
                         <div class="modal fade" id="del${board.id}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
@@ -105,7 +105,7 @@ function loadBoards() {
                         </div>
                         </div>
                     `;
-                    container.append(link);    
+                    container.append(link);
                 });
 
                 editEvent();
@@ -200,7 +200,7 @@ function editBoard(boardId) {
                 title: "Erro ao atualizar tarefa. Tente novamente mais tarde!",
                 icon: "error",
             });
-        }, 
+        },
         complete: function () {
             $('.spinnerEdit').hide();
         }

@@ -33,18 +33,19 @@ function initSortable() {
             animation: 150,
             ghostClass: 'bg-secondary',
             onEnd: function (evt) {
-                const taskElement = evt.item;
-                const movedTaskId = evt.item.dataset.taskId;
+                const taskElement = evt.item.querySelector('.card-task');
+                const movedTaskId = taskElement.dataset.taskId;
 
                 const newCategoryElement = evt.to.closest('.kanban-column');
                 const newCategoryId = newCategoryElement.dataset.categoryId;
 
                 const reorderedTasks = Array.from(evt.to.children).map((child, index) => {
+                    const card = child.querySelector('.card-task');
                     return {
-                        id: child.dataset.taskId,
+                        id: card?.dataset.taskId,
                         position: index
                     };
-                });
+                }).filter(task => task.id); // filtra nulls ou undefined
 
                 $.ajax({
                     url: '/tasks/reorder',
