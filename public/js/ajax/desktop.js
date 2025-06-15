@@ -25,7 +25,6 @@ function loadBoards() {
                         <div class="d-flex">
                             <a class="my-squad me-1 nav-link" href="/board/${board.id}">
                                 <span>${board.name}</span>
-                                <p>${board}</p>
                             </a>
 
                             <div class="dropdown">
