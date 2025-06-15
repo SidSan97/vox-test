@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CategoryStoreRequest;
+use App\Http\Requests\CategoryUpdateRequest;
 use App\Repository\CategoriesRepository;
 
 class CategoryController extends Controller
@@ -30,5 +31,21 @@ class CategoryController extends Controller
         $result = $this->categoryRepository->storeCategory($data);
 
         return $result;
+    }
+
+    public function update(CategoryUpdateRequest $request)
+    {
+        $data = $request->validated();
+
+        $result = $this->categoryRepository->updateCategory($data);
+
+        return $result;
+    }
+
+    public function delete(int $id)
+    {
+        $data = $this->categoryRepository->deleteCategory($id);
+
+        return $data;
     }
 }

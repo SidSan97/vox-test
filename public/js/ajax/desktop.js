@@ -35,11 +35,6 @@ function loadBoards() {
                                             Excluir
                                         </a>
                                     </li>
-                                    <!--li id="editBoard">
-                                        <a class="dropdown-item" data-board-id="${board.id}">
-                                            Editar
-                                        </a>
-                                    </li-->
                                     <li>
                                         <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#update${board.id}">
                                             Editar
@@ -113,7 +108,7 @@ function loadBoards() {
                                 </div>
                             </div>
                         </div>
-                        </div>
+                    </div>
                     `;
                     container.append(link);
                 });
@@ -234,7 +229,7 @@ function deleteBoard(boardId, role) {
                 willClose: () => {
                     removeclassesModal();
                     escButtonEvent();
-                    loadBoards();
+                    loadCategories();
                 }
             });
         },

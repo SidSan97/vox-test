@@ -54,13 +54,94 @@ function loadCategories() {
 
                     const template = `
                         <div class="kanban-column" data-category-id="${category.id}">
-                            <div class="kanban-header">${category.title}</div>
+                            <div class="kanban-header d-flex justify-content-between">
+                                ${category.title}
+
+                                <div class="dropdown">
+                                    <i class="bi bi-three-dots-vertical text-light dropdown-toggle me-3" id="dropButton${category.id}" data-bs-toggle="dropdown" aria-expanded="false"></i>
+                                    <ul class="dropdown-menu" aria-labelledby="dropButton${category.id}">
+                                        <li>
+                                            <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#delete${category.id}">
+                                                Excluir
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#updateCategory${category.id}">
+                                                Editar
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
 
                             <div class="sortable-coluna">
                                 ${tasksHtml}
                             </div>
 
                             <div class="add-card"><i class="bi bi-plus-lg"></i> Adicionar um cartão</div>
+                        </div>
+
+                        <div class="modal fade" id="delete${category.id}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title text-dark" id="exampleModalLabel">Atenção!</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+
+                                    <div class="modal-body text-dark">
+                                        Deseja mesmo excluir esta categoria? Todo seu conteudo também irá ser apagado.
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">NÃO</button>
+                                        <button 
+                                            type="button" 
+                                            class="btn btn-danger deleteCategoryBtn" 
+                                            data-deletecategory-id="${category.id}"
+                                        >
+                                            <span>SIM</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal fade" id="updateCategory${category.id}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title text-dark" id="exampleModalLabel">${category.title}</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+
+                                    <div class="modal-body text-dark">
+                                        <div class="row">
+                                            <div class="col-12 mb-3">
+                                                <label for="newTitleCategory">Defina o nome da categoria</label>
+                                                <input type="text" class="form-control" id="newTitleCategory${category.id}" value="${category.title}">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <div class="mt-3 text-dark spinnerEdit" style="display: none;">
+                                            <div class="spinner-border text-dark" role="status">
+                                                <span class="visually-hidden">Carregando...</span>
+                                            </div>
+                                            <span class="ms-2">Carregando...</span>
+                                        </div>
+
+                                        <button 
+                                            type="button" 
+                                            class="btn btn-primary updateCategoryBtn" 
+                                            data-updatecategory-id="${category.id}"
+                                        >
+                                            <span>Salvar</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     `;
 
@@ -69,6 +150,8 @@ function loadCategories() {
                 });
 
                 activateModal();
+                deleteCategoryEvent();
+                editCategoryEvent();
 
                 const listContainerHtml = `
                     <div id="list-container" class="d-inline-block">
@@ -175,6 +258,72 @@ function createTask(categoryId) {
     });
 }
 
+function deleteCategory(categoryId) {
+    $.ajax({
+        url: '/categories/' + categoryId,
+        method: 'DELETE',
+        data: {},
+        success: function (response) {
+            console.log(response.message)
+            Swal.fire({
+                title: response.message,
+                icon: "success",
+                showConfirmButton: true,
+                willClose: () => {
+                    removeclassesModal();
+                    escButtonEvent();
+                    loadCategories();
+                }
+            });
+        },
+        error: function (xhr) {
+            console.error(xhr.responseText);
+            Swal.fire({
+                title: "Erro ao excluir categoria!",
+                icon: "error",
+            });
+        },
+    });
+}
+
+function updateCategory(id) {
+    let title   = $('#newTitleCategory' + id).val();
+
+    if (!title.trim()) {
+        Swal.fire({
+            title: "Informe o nome da categoria!",
+            icon: "warning"
+        });
+        return;
+    }
+
+    $('.spinnerEdit').show();
+    $.ajax({
+        url: '/categories/' + id,
+        method: 'PUT',
+        data: {
+            title: title,
+            id: id,
+        },
+        success: function (response) {
+           console.log(response.message)
+           removeclassesModal();
+           escButtonEvent();
+           loadCategories();
+        },
+        error: function (xhr) {
+            console.error(xhr.responseText);
+            Swal.fire({
+                title: "Erro ao atualizar categoria. Tente novamente mais tarde!",
+                icon: "error",
+            });
+        },
+        complete: function () {
+            $('.spinnerEdit').hide();
+        }
+    });
+}
+
 $(document).ready(function () {
     loadCategories();
 });
@@ -218,3 +367,18 @@ $(document).on('click', '.save-task', function (e) {
     createTask(categoryId);
 });
 
+function deleteCategoryEvent() {
+    $(document).off('click', '.deleteCategoryBtn').on('click', '.deleteCategoryBtn', function (e) {
+        e.preventDefault();
+        const categoryId = $(this).data('deletecategory-id');
+        deleteCategory(categoryId);
+    });
+}
+
+function editCategoryEvent() {
+    $(document).off('click', '.updateCategoryBtn').on('click', '.updateCategoryBtn', function (e) {
+        e.preventDefault();
+        const updateId = $(this).data('updatecategory-id');
+        updateCategory(updateId);
+    });
+}

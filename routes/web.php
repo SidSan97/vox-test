@@ -22,6 +22,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/categories/{id}', [CategoryController::class, 'show'])->name('show.category');
     Route::post('/categories', [CategoryController::class, 'store'])->name('store.category');
+    Route::put('/categories/{id}', [CategoryController::class, 'update'])->name('delete.category');
+    Route::delete('/categories/{id}', [CategoryController::class, 'delete'])->name('delete.category');
 
     Route::get('/task/{id}', [TaskController::class, 'show'])->name('show.task');
     Route::post('/task', [TaskController::class, 'store'])->name('store.task');

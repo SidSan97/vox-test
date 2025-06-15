@@ -46,3 +46,19 @@
     color: rgb(220, 53, 69);
     display: none;
 }
+
+.dropdown-toggle::after {
+    display: none !important;
+}
+
+.dropdown-item {
+    cursor: pointer;
+}
+
+.bi-three-dots-vertical::before {
+    cursor: pointer !important;
+}
+
+.bi-three-dots-vertical {
+    margin-right: 0 !important;
+}

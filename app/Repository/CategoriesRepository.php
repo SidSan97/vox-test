@@ -58,4 +58,35 @@ class CategoriesRepository {
             return response()->json(['message' => "Erro ao criar categoria!"], 500);
         }
     }
+
+    public function updateCategory(array $data)
+    {
+        try {
+            $this->categoryRepository::find($data['id'])->update([
+                'title' => $data['title'],
+            ]);
+
+            return response()->json(['message' => "Categoria atualizada com sucesso!"], 200);
+
+        }catch (Exception $e) {
+            Log::error("Erro ao atualizar a categoria: ", ['error' => $e->getMessage()]);
+
+            return response()->json(['message' => "Erro ao atualizar a categoria. Tente novamente mais tarde!"], 500);
+        }
+    }
+
+    public function deleteCategory(int $id)
+    {
+        try {
+            $task = $this->categoryRepository::findOrFail($id);
+            $task->delete();
+
+            return response()->json(['message' => "Categoria excluída com sucesso!"], 200);
+
+        } catch (Exception $e) {
+            Log::error("Erro ao excluir Categoria: ", ['error' => $e->getMessage()]);
+
+            return response()->json(['message' => "Erro ao excluir Categoria. Tente novamente mais tarde!"], 500);
+        }
+    }
 }
