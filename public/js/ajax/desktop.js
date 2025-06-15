@@ -25,6 +25,7 @@ function loadBoards() {
                         <div class="d-flex">
                             <a class="my-squad me-1 nav-link" href="/board/${board.id}">
                                 <span>${board.name}</span>
+                                <p>${board}</p>
                             </a>
 
                             <div class="dropdown">
@@ -63,7 +64,12 @@ function loadBoards() {
 
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">NÃO</button>
-                                        <button type="button" class="btn btn-danger deleteBoardBtn" data-deleteboard-id="${board.id}">
+                                        <button 
+                                            type="button" 
+                                            class="btn btn-danger deleteBoardBtn" 
+                                            data-deleteboard-id="${board.id}"
+                                            data-role="${board.pivot.role}"
+                                        >
                                             <span>SIM</span>
                                         </button>
                                     </div>
@@ -96,7 +102,12 @@ function loadBoards() {
                                             <span class="ms-2">Carregando...</span>
                                         </div>
 
-                                        <button type="button" class="btn btn-primary updateBoardBtn" data-updateboard-id="${board.id}">
+                                        <button 
+                                            type="button" 
+                                            class="btn btn-primary updateBoardBtn" 
+                                            data-updateboard-id="${board.id}"
+                                            data-role="${board.pivot.role}"
+                                        >
                                             <span>Salvar</span>
                                         </button>
                                     </div>
@@ -169,7 +180,7 @@ function createBoard() {
     });
 }
 
-function editBoard(boardId) {
+function editBoard(boardId, role) {
     let title   = $('#newTitleBoard' + boardId).val();
 
     if (!title.trim()) {
@@ -187,6 +198,7 @@ function editBoard(boardId) {
         data: {
             title: title,
             id: boardId,
+            role: role,
         },
         success: function (response) {
            console.log(response.message)
@@ -207,11 +219,13 @@ function editBoard(boardId) {
     });
 }
 
-function deleteBoard(boardId) {
+function deleteBoard(boardId, role) {
     $.ajax({
         url: '/boards/' + boardId,
         method: 'DELETE',
-        data: {},
+        data: {
+            role: role,
+        },
         success: function (response) {
             console.log(response.message)
             Swal.fire({
@@ -248,7 +262,8 @@ function editEvent() {
     $(document).on('click', '.updateBoardBtn', function (e) {
         e.preventDefault();
         const boardId = $(this).data('updateboard-id');
-        editBoard(boardId);
+        const role    = $(this).data('role');
+        editBoard(boardId, role);
     });
 }
 
@@ -256,7 +271,8 @@ function deleteEvent() {
     $(document).off('click', '.deleteBoardBtn').on('click', '.deleteBoardBtn', function (e) {
         e.preventDefault();
         const boardId = $(this).data('deleteboard-id');
-        deleteBoard(boardId);
+        const role    = $(this).data('role');
+        deleteBoard(boardId, role);
     });
 }
 

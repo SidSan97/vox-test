@@ -24,6 +24,7 @@ class BoardUpdateRequest extends FormRequest
         return [
            'id' => 'required|integer|min:1',
             'title' => 'required|string|max:255',
+            'role' => 'required|string|max:13',
         ];
     }
 }

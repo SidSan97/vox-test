@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\BoardDeleteRequest;
 use App\Http\Requests\BoardStoreRequest;
 use App\Http\Requests\BoardUpdateRequest;
 use App\Models\Board;
@@ -43,13 +44,23 @@ class BoardController extends Controller
     {
         $data = $request->validated();
 
+        if($data['role'] !== "admin") {
+            return response()->json(['message' => "Você não possui permissão para esta ação!"], 403);
+        }
+
         $result = $this->boardRepository->updateBoard($data);
 
         return $result;
     }
 
-    public function delete(int $id)
+    public function delete(BoardDeleteRequest $request, int $id)
     {
+        $validation = $request->validated();
+
+        if($validation['role'] !== "admin") {
+            return response()->json(['message' => "Você não possui permissão para esta ação!"], 403);
+        }
+
         $data = $this->boardRepository->deleteBoard($id);
 
         return $data;
