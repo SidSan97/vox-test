@@ -4,7 +4,7 @@
   <li> Bootstrap </li>
     <li> Blade </li>
   <li> JQuery </li>
-  <li> Ajx </li>
+  <li> Ajax </li>
   <li> Bootstrap Icons </li>
   <li> SweetAlert2 </li>
 </ul>
