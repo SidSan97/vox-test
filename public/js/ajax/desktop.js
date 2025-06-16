@@ -58,9 +58,9 @@ function loadBoards() {
 
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">NÃO</button>
-                                        <button 
-                                            type="button" 
-                                            class="btn btn-danger deleteBoardBtn" 
+                                        <button
+                                            type="button"
+                                            class="btn btn-danger deleteBoardBtn"
                                             data-deleteboard-id="${board.id}"
                                             data-role="${board.pivot.role}"
                                         >
@@ -96,9 +96,9 @@ function loadBoards() {
                                             <span class="ms-2">Carregando...</span>
                                         </div>
 
-                                        <button 
-                                            type="button" 
-                                            class="btn btn-primary updateBoardBtn" 
+                                        <button
+                                            type="button"
+                                            class="btn btn-primary updateBoardBtn"
                                             data-updateboard-id="${board.id}"
                                             data-role="${board.pivot.role}"
                                         >
@@ -229,7 +229,7 @@ function deleteBoard(boardId, role) {
                 willClose: () => {
                     removeclassesModal();
                     escButtonEvent();
-                    loadCategories();
+                    loadBoards();
                 }
             });
         },
