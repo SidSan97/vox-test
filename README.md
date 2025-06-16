@@ -16,6 +16,7 @@
   <li> cp .env.example .env </li>
   <li> ATUALIZE O  <i>.env</i> COM SUAS CREDENCIAIS DO BANCO DE DADOS </li>
   <li> php artisan key:generate </li>
+  <li> php artisan vendor:publish --tag=sanctum-config </li>
   <li> php artisan migrate </li>
   <li> npm install </li>
   <li> composer dev </li>
